@@ -282,6 +282,7 @@ TEST_P(PosixEndpointTest, ConnectExchangeBidiDataTransferTest) {
   }
   worker->Wait();
 }
+// TODO(ayerbea): Rcv lowat
 
 // Create  N connections and exchange and verify random number of messages over
 // each connection in parallel.
@@ -338,6 +339,33 @@ TEST_P(PosixEndpointTest, MultipleIPv6ConnectionsToOneOracleListenerTest) {
   }
   for (auto& t : threads) {
     t.join();
+  }
+  worker->Wait();
+}
+
+TEST_P(PosixEndpointTest, LargeReadHintTest) {
+  if (PosixPoller() == nullptr) {
+    return;
+  }
+  Worker* worker = new Worker(GetPosixEE(), PosixPoller());
+  worker->Start();
+  {
+    auto connections = CreateConnectedEndpoints(*PosixPoller(), GetParam(), 1,
+                                                GetPosixEE(), GetOracleEE());
+    auto it = connections.begin();
+    auto client_endpoint = std::move((*it).client_endpoint);
+    auto server_endpoint = std::move((*it).server_endpoint);
+    EXPECT_NE(client_endpoint, nullptr);
+    EXPECT_NE(server_endpoint, nullptr);
+    connections.erase(it);
+
+    // 10MB message is larger than 64 * 64KB = 4MB, so it has count >
+    // MAX_READ_IOVEC. If tcp_frame_size_tuning is enabled, we pass a large read
+    // hint.
+    std::string large_msg(10 * 1024 * 1024, 'a');
+    ASSERT_TRUE(SendValidatePayload(large_msg, client_endpoint.get(),
+                                    server_endpoint.get(), large_msg.size())
+                    .ok());
   }
   worker->Wait();
 }
@@ -675,6 +703,7 @@ int main(int argc, char** argv) {
   }
   // TODO(ctiller): EventEngine temporarily needs grpc to be initialized first
   // until we clear out the iomgr shutdown code.
+  grpc_core::ForceEnableExperiment("tcp_frame_size_tuning", true);
   grpc_init();
   int r = RUN_ALL_TESTS();
   grpc_shutdown();
