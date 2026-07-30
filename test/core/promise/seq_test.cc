@@ -20,6 +20,7 @@
 #include <vector>
 
 #include "src/proto/grpc/channelz/v2/promise.upb.h"
+#include "gmock/gmock.h"
 #include "upb/mem/arena.hpp"
 #include "gtest/gtest.h"
 #include "absl/strings/str_cat.h"
@@ -309,6 +310,53 @@ TEST(SeqIterTest, Accumulate) {
                       return [cur, next]() { return cur + next; };
                     })(),
             Poll<int>(15));
+}
+
+TEST(SeqTest, NestedSeq) {
+  std::string execution_order;
+  bool pending = true;
+
+  auto nested_seq = Seq(
+      [&execution_order]() {
+        absl::StrAppend(&execution_order, "1");
+        return 10;
+      },
+      [&execution_order, &pending](int outer_val) {
+        return Seq(
+            [&execution_order, outer_val]() {
+              absl::StrAppend(&execution_order, "2");
+              return outer_val * 2;  // Passes 20 to the next step
+            },
+            [&execution_order, &pending](int inner_val) -> Poll<int> {
+              if (pending) {
+                absl::StrAppend(&execution_order, "P");
+                return Pending{};
+              }
+              absl::StrAppend(&execution_order, "3");
+              return inner_val + 5;  // Passes 25 when pending is set to false
+            }
+        );
+      },
+      [&execution_order](int nested_result) {
+        absl::StrAppend(&execution_order, "4");
+        return nested_result * 2;  // Returns 50 finally
+      }
+  );
+
+  // First poll: Hits the inner pending state
+  auto res1 = nested_seq();
+  EXPECT_TRUE(res1.pending());
+  EXPECT_STREQ(execution_order.c_str(), "12P");
+
+  // Clear state and allow it to finish
+  execution_order.clear();
+  pending = false;
+
+  // Second poll: Resumes from Inner Step 2
+  auto res2 = nested_seq();
+  EXPECT_TRUE(res2.ready());
+  EXPECT_STREQ(execution_order.c_str(), "34");
+  EXPECT_EQ(res2.value(), 50);
 }
 
 }  // namespace grpc_core
