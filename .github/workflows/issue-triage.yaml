@@ -15,10 +15,19 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ALPHA_BRIDGE_SOURCE_SHA: ${{ github.event_name == 'schedule' && 
+        '724b3ccb608b8ac7e51482a15113edfd94bb28ba' || github.sha }}
+      ALPHA_BRIDGE_SOURCE_REF: ${{ github.event_name == 'schedule' && 
+        'refs/heads/master' || github.ref }}
+      ALPHA_BRIDGE_SOURCE_REF_NAME: ${{ github.event_name == 'schedule' && 
+        'master' || github.ref_name }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v7
 
+      with:
+        ref: ${{ github.event_name == 'schedule' && 
+          '724b3ccb608b8ac7e51482a15113edfd94bb28ba' || github.sha }}
     - name: Restore rotation index cache
       uses: actions/cache/restore@v6
       with:
@@ -81,7 +90,7 @@ jobs:
         AB_RUN_ID: ${{ github.run_id }}
         AB_HEAD_SHA: 724b3ccb608b8ac7e51482a15113edfd94bb28ba
         AB_WORKFLOW_DIGEST: 
-          40600fd8fcc6a03ae69004e2c3748b5c42043c419173765ef3e81b401f8576a7
+          97850dddc559f89127797a716fd051a6c32f8cca8fc9847a428ad9ae2f7ee412
         AB_EVENT: ${{ github.event_name }}
         AB_SCHEDULE: ${{ github.event.schedule || '' }}
         AB_VARIABLES: ${{ toJSON(vars) }}

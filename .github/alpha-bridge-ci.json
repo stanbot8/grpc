@@ -1,13 +1,13 @@
 {
   "definition_blob_sha1": {
     ".github/workflows/alpha-bridge-ci-verify.yml": "211d78b275bbb87055d46d18edfc9b309afb7fd3",
-    ".github/workflows/issue-triage.yaml": "ffb347df9a944600d69e4d83e5775836e90837b6"
+    ".github/workflows/issue-triage.yaml": "f7ac1d02eedf58e0ae455321e5b583c347a1074c"
   },
   "definition_sha256": {
     ".github/workflows/alpha-bridge-ci-verify.yml": "4cac5461d20019fd71bd15ab6e775a433bcfc570d3cc96f9132a4bf68d15c04e",
-    ".github/workflows/issue-triage.yaml": "90b1d5dc8948aa8a1a59c623667cf03b3cb5f58ae4c1687e072912296b9957da"
+    ".github/workflows/issue-triage.yaml": "769b7ac661b08db43a6a9cd9265c722f817810d2ca0410c2cf680840f0b08969"
   },
-  "generator_sha256": "f5fbad0230ba7fa85305a317f424ab1f31bb96ff28ce023a46664fdaad8051c9",
+  "generator_sha256": "3b26cda454cba3b637212cdea3d130c69e2223d93535daef4f59e8f73b2e6cc3",
   "schema": "alpha-bridge/fork-ci",
   "source_branch": "master",
   "source_commit": "724b3ccb608b8ac7e51482a15113edfd94bb28ba",
