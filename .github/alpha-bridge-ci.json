@@ -1,20 +1,38 @@
 {
   "definition_blob_sha1": {
-    ".github/workflows/alpha-bridge-ci-verify.yml": "d0cf89303388ac1271c908436e9f4bfe75bae884",
-    ".github/workflows/issue-triage.yaml": "9f3fb3a0e24596978cd5a7e6b2ff0dbe9c267161"
+    ".github/workflows/alpha-bridge-ci-verify.yml": "d19efeb3bd029beb4c50fd874010d2b930d20715",
+    ".github/workflows/issue-triage.yaml": "8be4c5a76ae19809491a6b56359557c9f43dd291",
+    ".github/workflows/pr-auto-fix.yaml": "ad67fd7aa0660813310e8740fc6e5dc56ddd142e",
+    ".github/workflows/pr-auto-tag.yaml": "ace3f9b241f53bf43910df86cdda499be1085742",
+    ".github/workflows/pr-check-bzlmod-deps.yaml": "e7c6be87c15440a81734c8fed6f1303c80991e82",
+    ".github/workflows/publish-to-bcr.yaml": "c9e64b8e48a4982f4e47baf7c28d60abcc7bf189",
+    ".github/workflows/push_php_mirror.yml": "49d1e3d126a2a0273e2ffe845a300a430978fd5c",
+    ".github/workflows/update-artifacts-branch.yaml": "41cfda6b4e82f52a47752af34fae85fcec6d475a"
   },
   "definition_sha256": {
-    ".github/workflows/alpha-bridge-ci-verify.yml": "99e25329cff2a8ae245f2f99850472bdd82f571c3bc33fadfc5ac11b9f29cb7e",
-    ".github/workflows/issue-triage.yaml": "ef939f38d90d9eed7835d1951121e038240b4cf095d9e5087c8a349fd7b8a4c8"
+    ".github/workflows/alpha-bridge-ci-verify.yml": "8fde9e2f5e1b37bbbb22794427ac6d217d8b18bc857606edd0b072e89c58b436",
+    ".github/workflows/issue-triage.yaml": "7d23bd3e6a6fa2af34c8702547d6f0bdcf30a0b5119094b9378322f8ea0c7be4",
+    ".github/workflows/pr-auto-fix.yaml": "e23abb305036ba694286abda0700cde2f8922efc3b9756883e46e2093ced5036",
+    ".github/workflows/pr-auto-tag.yaml": "97d192db7cfaf89385b8442cf99fc6cf12d60d362e0fb6d688b15963761833ec",
+    ".github/workflows/pr-check-bzlmod-deps.yaml": "84a2dcd0768069f223b424846a6ddc5211c68a3cc28a3fd7ee1722fd981f7919",
+    ".github/workflows/publish-to-bcr.yaml": "a3147b2967d669130c64436c8869750f428a721e4532da8a00702f5da1ba4945",
+    ".github/workflows/push_php_mirror.yml": "373a69d4b85d88c5c51019bacf4cbb9f570bd8acff5474b1d4dc33c67ba389e4",
+    ".github/workflows/update-artifacts-branch.yaml": "3174bc374ccc7b92a381dd688604b4e7cb947c083ef421ca29c38218e95d2755"
   },
-  "generator_sha256": "8bff038bcb711330ba78bf433a2923d57d4ddfeedd59b8324e44e2a59f6b0389",
+  "generator_sha256": "f9d11fba5b604bac754f7ab7e40ccde549adf8e029da2ca91ed14e9ab94c0775",
   "schema": "alpha-bridge/fork-ci",
   "source_branch": "master",
-  "source_commit": "daa899ed7e3a0c2f12451c90fdc3eb4d7e03aa54",
+  "source_commit": "245fd60bf33a75548f17ff00a1d08e491b01c6d8",
   "source_repository": "grpc/grpc",
   "version": 1,
   "workflows": [
     ".github/workflows/alpha-bridge-ci-verify.yml",
-    ".github/workflows/issue-triage.yaml"
+    ".github/workflows/issue-triage.yaml",
+    ".github/workflows/pr-auto-fix.yaml",
+    ".github/workflows/pr-auto-tag.yaml",
+    ".github/workflows/pr-check-bzlmod-deps.yaml",
+    ".github/workflows/publish-to-bcr.yaml",
+    ".github/workflows/push_php_mirror.yml",
+    ".github/workflows/update-artifacts-branch.yaml"
   ]
 }
