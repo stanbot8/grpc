@@ -21,7 +21,7 @@ jobs:
 
       with:
         ref: ${{ (github.event_name == 'schedule' || github.event_name == 
-          'workflow_run') && '724b3ccb608b8ac7e51482a15113edfd94bb28ba' || 
+          'workflow_run') && 'daa899ed7e3a0c2f12451c90fdc3eb4d7e03aa54' || 
           github.sha }}
     - name: Restore rotation index cache
       uses: actions/cache/restore@v6
@@ -91,9 +91,9 @@ jobs:
         GH_TOKEN: ${{ github.token }}
         AB_REPOSITORY: ${{ github.repository }}
         AB_RUN_ID: ${{ github.run_id }}
-        AB_HEAD_SHA: 724b3ccb608b8ac7e51482a15113edfd94bb28ba
+        AB_HEAD_SHA: daa899ed7e3a0c2f12451c90fdc3eb4d7e03aa54
         AB_WORKFLOW_DIGEST: 
-          d1cbc4f541226248577d4c44ce973cb372b1099363e28b6a213f43d12af1add9
+          25e94e39e62e621982ac189169baf05d07cad3bcfd13cd0f3f7bb5ec44ffdc18
         AB_EVENT: ${{ github.event_name }}
         AB_SCHEDULE: ${{ github.event.schedule || '' }}
         AB_VARIABLES: ${{ toJSON(vars) }}
