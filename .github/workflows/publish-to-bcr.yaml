@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
-        description: gRPC tag to deploy
+        description: "gRPC tag to deploy"
         required: true
         type: string
 
@@ -38,8 +38,8 @@ jobs:
       publish_token: ${{ secrets.BCR_PUBLISH_TOKEN }}
     needs:
     - alpha_bridge_inputs
-    if: ${{ (success()) && needs.alpha_bridge_inputs.outputs.changed == 'true' 
-      }}
+    if: |-
+      ${{ (success()) && needs.alpha_bridge_inputs.outputs.changed == 'true' }}
   alpha_bridge_inputs:
     name: CI input check
     runs-on: ubuntu-latest
@@ -65,7 +65,7 @@ jobs:
         AB_REF: ${{ (github.event_name == 'schedule' || github.event_name == 
           'workflow_run') && 'refs/heads/master' || github.ref }}
         AB_WORKFLOW_DIGEST: 
-          bc1e225aa0179080985a16a31a7dfa9322911acbcba9f21484c091fb955dc32d
+          56397cabd3228f70d9e379e2921e8d3a4e723952f750fdf4a7e805337e1d6c05
         AB_EVENT: ${{ github.event_name }}
         AB_SCHEDULE: ${{ github.event.schedule || '' }}
         AB_VARIABLES: ${{ toJSON(vars) }}

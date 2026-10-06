@@ -15,12 +15,12 @@ jobs:
     steps:
     - uses: actions/labeler@bf12e9b00b37c5c0ca2b87b79b2daf7891dbda13 # v7.0.0
       with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
         sync-labels: false
     needs:
     - alpha_bridge_inputs
-    if: ${{ (success()) && needs.alpha_bridge_inputs.outputs.changed == 'true' 
-      }}
+    if: |-
+      ${{ (success()) && needs.alpha_bridge_inputs.outputs.changed == 'true' }}
   alpha_bridge_inputs:
     name: CI input check
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
         AB_REF: ${{ (github.event_name == 'schedule' || github.event_name == 
           'workflow_run') && 'refs/heads/master' || github.ref }}
         AB_WORKFLOW_DIGEST: 
-          97e8c8be19957bf98e90c4a56705e7324354fba5afd3860469831b211e53c9c0
+          c39449db94ec4ab72e2facba746b6a3ee4a735603df64f46d1d8966f297c749d
         AB_EVENT: ${{ github.event_name }}
         AB_SCHEDULE: ${{ github.event.schedule || '' }}
         AB_VARIABLES: ${{ toJSON(vars) }}
