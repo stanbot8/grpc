@@ -1,22 +1,18 @@
-name: PR Auto Tag
+name: CI input consumer
 on:
-  pull_request_target:
-    types: [opened, reopened, synchronize, edited]
-permissions:
-  contents: read # to determine modified files (actions/labeler)
-
+  workflow_call:
+    inputs:
+      probe:
+        type: string
+        required: true
+      slot:
+        type: string
+        required: true
 jobs:
-  triage:
-    permissions:
-      contents: read # to determine modified files (actions/labeler)
-      pull-requests: write # to add labels to PRs (actions/labeler)
-
+  check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/labeler@bf12e9b00b37c5c0ca2b87b79b2daf7891dbda13 # v7.0.0
-      with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
-        sync-labels: false
+    - run: echo 'Changed inputs reached consumer ${{ inputs.slot }}'
     needs:
     - alpha_bridge_inputs
     if: |-
@@ -28,7 +24,7 @@ jobs:
       actions: read
       contents: read
     concurrency:
-      group: alpha-bridge-inputs-b638e0d52981e958-${{ github.workflow }}-${{ 
+      group: alpha-bridge-inputs-04fbff4179fd2373-${{ github.workflow }}-${{ 
         github.sha }}-${{ github.event.schedule || github.event_name }}
       cancel-in-progress: false
       queue: max
@@ -41,13 +37,10 @@ jobs:
         GH_TOKEN: ${{ github.token }}
         AB_REPOSITORY: ${{ github.repository }}
         AB_RUN_ID: ${{ github.run_id }}
-        AB_HEAD_SHA: ${{ (github.event_name == 'schedule' || github.event_name 
-          == 'workflow_run') && '245fd60bf33a75548f17ff00a1d08e491b01c6d8' || 
-          github.sha }}
-        AB_REF: ${{ (github.event_name == 'schedule' || github.event_name == 
-          'workflow_run') && 'refs/heads/master' || github.ref }}
+        AB_HEAD_SHA: ${{ github.sha }}
+        AB_REF: ${{ github.ref }}
         AB_WORKFLOW_DIGEST: 
-          9a1fa5e9af5cc8e454dee3ca60cd7530f2a397c9215eb2a091a32d435ea44219
+          204202fd1f1fa08793779bf1cda80736b14fcfc47bf1262b68cdcee1a843ad8c
         AB_EVENT: ${{ github.event_name }}
         AB_SCHEDULE: ${{ github.event.schedule || '' }}
         AB_VARIABLES: ${{ toJSON(vars) }}
